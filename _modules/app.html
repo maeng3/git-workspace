@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>app &#8212; opensource_programming  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=61cd365c" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for app</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span>
+<span class="kn">from</span> <span class="nn">flasgger</span> <span class="kn">import</span> <span class="n">Swagger</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">swagger</span> <span class="o">=</span> <span class="n">Swagger</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+
+<div class="viewcode-block" id="UserProfile">
+<a class="viewcode-back" href="../app.html#app.UserProfile">[docs]</a>
+<span class="k">class</span> <span class="nc">UserProfile</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;사용자의 프로필 정보를 관리하는 클래스입니다. </span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        interest (str): 사용자의 관심 분야 목록입니다. [cite: 78, 79]</span>
+<span class="sd">        bio (str): 사용자의 자기소개 정보입니다. [cite: 78, 79]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;기본 프로필 정보를 초기화합니다.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interest</span> <span class="o">=</span> <span class="s2">&quot;QML&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bio</span> <span class="o">=</span> <span class="s2">&quot;KNU undergraduate student&quot;</span>
+
+<div class="viewcode-block" id="UserProfile.add_interest">
+<a class="viewcode-back" href="../app.html#app.UserProfile.add_interest">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_interest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;기본 관심 분야에 새로운 항목을 추가합니다. [cite: 90]</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            val (str): 추가할 새로운 관심 분야 문자열입니다. [cite: 92, 93]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">val</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">interest</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;, </span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+<div class="viewcode-block" id="UserProfile.add_bio">
+<a class="viewcode-back" href="../app.html#app.UserProfile.add_bio">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_bio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;기본 자기소개에 새로운 내용을 덧붙입니다.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            val (str): 추가할 자기소개 내용입니다.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">val</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bio</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;, </span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">&quot;</span></div>
+</div>
+
+
+<span class="n">profile_data</span> <span class="o">=</span> <span class="n">UserProfile</span><span class="p">()</span>
+<span class="n">study_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Opensource programming&quot;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="index">
+<a class="viewcode-back" href="../app.html#app.index">[docs]</a>
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;메인 페이지를 렌더링합니다. </span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: 홈 화면 HTML 코드입니다. [cite: 95, 97]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s2">&quot;&lt;h1&gt;Sanghyeon&#39;s Dev Log&lt;/h1&gt;&lt;nav&gt;&lt;a href=&#39;/profile&#39;&gt;Profile&lt;/a&gt; | &lt;a href=&#39;/study&#39;&gt;Study&lt;/a&gt;&lt;/nav&gt;&quot;</span></div>
+
+
+<div class="viewcode-block" id="profile">
+<a class="viewcode-back" href="../app.html#app.profile">[docs]</a>
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/profile&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">profile</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;프로필 정보를 조회하거나 업데이트하는 엔드포인트입니다.</span>
+
+<span class="sd">    .. code-block:: yaml</span>
+
+<span class="sd">        ---</span>
+<span class="sd">        </span>
+<span class="sd">        tags:</span>
+<span class="sd">          - Profile API</span>
+<span class="sd">        parameters:</span>
+<span class="sd">          - name: action</span>
+<span class="sd">            in: formData</span>
+<span class="sd">            type: string</span>
+<span class="sd">            enum: [update_interest, update_bio]</span>
+<span class="sd">            description: 업데이트할 항목의 종류입니다.</span>
+<span class="sd">          - name: interest</span>
+<span class="sd">            in: formData</span>
+<span class="sd">            type: string</span>
+<span class="sd">            description: 추가할 관심 분야입니다.</span>
+<span class="sd">          - name: bio</span>
+<span class="sd">            in: formData</span>
+<span class="sd">            type: string</span>
+<span class="sd">            description: 추가할 자기소개 내용입니다.</span>
+<span class="sd">        responses:</span>
+<span class="sd">          200:</span>
+<span class="sd">            description: 프로필 페이지가 성공적으로 렌더링되었습니다.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="n">handle_profile_update</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">render_profile_page</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="handle_profile_update">
+<a class="viewcode-back" href="../app.html#app.handle_profile_update">[docs]</a>
+<span class="k">def</span> <span class="nf">handle_profile_update</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;POST 요청으로부터 전달받은 데이터를 처리하여 프로필 객체를 업데이트합니다. &quot;&quot;&quot;</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;action&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="s1">&#39;update_interest&#39;</span><span class="p">:</span>
+        <span class="n">profile_data</span><span class="o">.</span><span class="n">add_interest</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;interest&#39;</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">action</span> <span class="o">==</span> <span class="s1">&#39;update_bio&#39;</span><span class="p">:</span>
+        <span class="n">profile_data</span><span class="o">.</span><span class="n">add_bio</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;bio&#39;</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="render_profile_page">
+<a class="viewcode-back" href="../app.html#app.render_profile_page">[docs]</a>
+<span class="k">def</span> <span class="nf">render_profile_page</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;프로필 정보와 수정 폼을 포함한 HTML을 생성합니다. [cite: 70]&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    &lt;h1&gt;My Profile&lt;/h1&gt;</span>
+<span class="s2">    &lt;p&gt;&lt;strong&gt;Interests:&lt;/strong&gt; </span><span class="si">{</span><span class="n">profile_data</span><span class="o">.</span><span class="n">interest</span><span class="si">}</span><span class="s2">&lt;/p&gt;</span>
+<span class="s2">    &lt;p&gt;&lt;strong&gt;Bio:&lt;/strong&gt; </span><span class="si">{</span><span class="n">profile_data</span><span class="o">.</span><span class="n">bio</span><span class="si">}</span><span class="s2">&lt;/p&gt;</span>
+<span class="s2">    &lt;hr&gt;</span>
+<span class="s2">    &lt;form method=&quot;POST&quot;&gt;&lt;input type=&quot;hidden&quot; name=&quot;action&quot; value=&quot;update_interest&quot;&gt;</span>
+<span class="s2">        Add Interest: &lt;input type=&quot;text&quot; name=&quot;interest&quot;&gt;&lt;input type=&quot;submit&quot; value=&quot;Add&quot;&gt;&lt;/form&gt;</span>
+<span class="s2">    &lt;form method=&quot;POST&quot;&gt;&lt;input type=&quot;hidden&quot; name=&quot;action&quot; value=&quot;update_bio&quot;&gt;</span>
+<span class="s2">        Add Bio: &lt;input type=&quot;text&quot; name=&quot;bio&quot;&gt;&lt;input type=&quot;submit&quot; value=&quot;Add&quot;&gt;&lt;/form&gt;</span>
+<span class="s2">    &lt;br&gt;&lt;a href=&#39;/&#39;&gt;[Back to Home]&lt;/a&gt;</span>
+<span class="s2">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="study">
+<a class="viewcode-back" href="../app.html#app.study">[docs]</a>
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/study&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">study</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;학습 목록을 관리하고 조회하는 엔드포인트입니다.</span>
+
+<span class="sd">    .. code-block:: yaml</span>
+
+<span class="sd">        ---</span>
+
+<span class="sd">        tags:</span>
+<span class="sd">          - Study API</span>
+<span class="sd">        parameters:</span>
+<span class="sd">          - name: subject</span>
+<span class="sd">            in: formData</span>
+<span class="sd">            type: string</span>
+<span class="sd">            description: 목록에 추가할 학습 과목명입니다.</span>
+<span class="sd">        responses:</span>
+<span class="sd">          200:</span>
+<span class="sd">            description: 학습 목록 페이지가 성공적으로 로드되었습니다.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="n">subject</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;subject&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">subject</span><span class="p">:</span>
+            <span class="n">study_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">render_study_page</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="render_study_page">
+<a class="viewcode-back" href="../app.html#app.render_study_page">[docs]</a>
+<span class="k">def</span> <span class="nf">render_study_page</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;현재 학습 중인 과목 목록과 입력 폼이 담긴 HTML을 생성합니다.&quot;&quot;&quot;</span>
+    <span class="n">subjects_html</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;&lt;li&gt;</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">&lt;/li&gt;&quot;</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">study_list</span><span class="p">])</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    &lt;h1&gt;Study Room&lt;/h1&gt;</span>
+<span class="s2">    &lt;ul&gt;</span><span class="si">{</span><span class="n">subjects_html</span><span class="si">}</span><span class="s2">&lt;/ul&gt;</span>
+<span class="s2">    &lt;form method=&quot;POST&quot;&gt;</span>
+<span class="s2">        Subject: &lt;input type=&quot;text&quot; name=&quot;subject&quot;&gt;</span>
+<span class="s2">        &lt;input type=&quot;submit&quot; value=&quot;Add Subject&quot;&gt;</span>
+<span class="s2">    &lt;/form&gt;</span>
+<span class="s2">    &lt;br&gt;&lt;a href=&#39;/&#39;&gt;[Back to Home]&lt;/a&gt;</span>
+<span class="s2">    &quot;&quot;&quot;</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;0.0.0.0&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">opensource_programming</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">git-workspace</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, maeng.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
